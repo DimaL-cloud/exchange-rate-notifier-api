@@ -24,6 +24,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 	{
 		api.POST("/subscribe", h.subscribe)
 		api.POST("/unsubscribe", h.unsubscribe)
+		api.GET("/rate", h.rate)
 	}
 	return router
 }
