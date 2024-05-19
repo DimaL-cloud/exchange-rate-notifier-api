@@ -8,7 +8,7 @@ import (
 )
 
 func (h *Handler) rate(c *gin.Context) {
-	rateClient := client.ExchangeRateClient{}
+	rateClient := client.NewExchangeRateClient()
 	rate, err := rateClient.GetCurrentExchangeRate()
 	if err != nil {
 		newError(c, http.StatusBadRequest, "Invalid status value")
