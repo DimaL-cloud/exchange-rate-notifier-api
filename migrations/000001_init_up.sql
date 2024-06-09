@@ -1,5 +1,0 @@
-CREATE TABLE IF NOT EXISTS subscription
-(
-    id    SERIAL PRIMARY KEY NOT NULL UNIQUE,
-    email VARCHAR(255)       NOT NULL UNIQUE,
-);

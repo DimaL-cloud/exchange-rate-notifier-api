@@ -2,19 +2,26 @@ package main
 
 import (
 	"context"
+	"errors"
 	"exchange-rate-notifier-api/pkg/client"
 	"exchange-rate-notifier-api/pkg/handler"
 	exchangeratenotifierapi "exchange-rate-notifier-api/pkg/models"
 	"exchange-rate-notifier-api/pkg/repository"
 	"exchange-rate-notifier-api/pkg/scheduler"
 	"exchange-rate-notifier-api/pkg/service"
+	"github.com/golang-migrate/migrate/v4"
+	"github.com/golang-migrate/migrate/v4/database/postgres"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/joho/godotenv"
+	_ "github.com/lib/pq"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"os"
 	"os/signal"
 	"syscall"
 )
+
+const MigrationsPath = "file://migrations"
 
 // @title Exchange rate notifier API
 // @version 1.0
@@ -44,6 +51,21 @@ func main() {
 	db, err := repository.NewDB(dbConfig)
 	if err != nil {
 		log.Fatalf("failed to initialize db: %s", err.Error())
+	}
+	driver, err := postgres.WithInstance(db.DB, &postgres.Config{})
+	m, err := migrate.NewWithDatabaseInstance(
+		MigrationsPath,
+		dbConfig.DBName, driver)
+	if err != nil {
+		log.Fatalf("failed to create migration instance: %s", err.Error())
+	}
+	err = m.Up()
+	if err != nil {
+		if errors.Is(err, migrate.ErrNoChange) {
+			log.Print("No migrations to apply")
+		} else {
+			log.Fatalf("failed to apply migrations: %s", err.Error())
+		}
 	}
 	repositories := repository.NewRepository(db)
 	services := service.NewService(repositories, mailConfig)
