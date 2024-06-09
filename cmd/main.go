@@ -2,9 +2,9 @@ package main
 
 import (
 	"context"
-	exchangeratenotifierapi "exchange-rate-notifier-api"
 	"exchange-rate-notifier-api/pkg/client"
 	"exchange-rate-notifier-api/pkg/handler"
+	exchangeratenotifierapi "exchange-rate-notifier-api/pkg/models"
 	"exchange-rate-notifier-api/pkg/repository"
 	"exchange-rate-notifier-api/pkg/scheduler"
 	"exchange-rate-notifier-api/pkg/service"

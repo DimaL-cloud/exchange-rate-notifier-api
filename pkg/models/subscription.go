@@ -1,4 +1,4 @@
-package exchange_rate_notifier_api
+package models
 
 type Subscription struct {
 	Id    int    `json:"id"`

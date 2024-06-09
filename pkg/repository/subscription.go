@@ -1,7 +1,7 @@
 package repository
 
 import (
-	exchangeratenotifierapi "exchange-rate-notifier-api"
+	exchangeratenotifierapi "exchange-rate-notifier-api/pkg/models"
 	"fmt"
 	"github.com/jmoiron/sqlx"
 )

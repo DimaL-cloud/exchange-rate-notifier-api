@@ -1,7 +1,7 @@
 package service
 
 import (
-	exchangeratenotifierapi "exchange-rate-notifier-api"
+	exchangeratenotifierapi "exchange-rate-notifier-api/pkg/models"
 	"exchange-rate-notifier-api/pkg/repository"
 )
 
